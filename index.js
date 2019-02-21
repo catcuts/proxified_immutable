@@ -16,7 +16,7 @@ const proxified = immutableObject => {
 
             // 否则
 			let result = target.__i.get(name);
-			if (util.isObject(result)) {
+			if (Immutable.isImmutable(result)) {
                 // 返回值（对象）的代理
 				return new Proxy({ __i: result }, handler);
 			} else {
