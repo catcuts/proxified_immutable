@@ -11,7 +11,14 @@ const proxified = immutableObject => {
             // 比如 封装(Map.set/setIn/mergeDeepIn/...)
             if (util.isFunction(immutable[name])) return (...arguments) => {
                 let result = immutable[name](...arguments);  // 它总是返回一个新的 immutable 对象
-                return new Proxy({ __i: result }, handler);  // 代理新的 immutable 对象
+                // 代理新的 immutable 对象
+				if (Immutable.isImmutable(result)) {
+					// 返回值（对象）的代理
+					return new Proxy({ __i: result }, handler);
+				} else {
+					// 或返回值（非对象）
+					return result;
+				}
             };
 
             // 否则
@@ -23,11 +30,19 @@ const proxified = immutableObject => {
                 // 或返回值（非对象）
 				return result;
 			}
+
+			return target[name];
 		},
 		set: (obj, prop, value) => {
 			obj.__i.set(prop, value);
 			return true; // support Object.assign
 		},
+		ownKeys: function(target, key) {
+			return Object.keys(target.__i.toJS());
+		},
+		getOwnPropertyDescriptor: function(target, key) {
+			 return { enumerable: true, configurable: true };
+		}
 	};
 	return new Proxy({ __i: immutableObject }, handler);
 };
