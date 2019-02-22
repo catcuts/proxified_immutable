@@ -2,7 +2,7 @@
 
 A wrapper for immutable.js using Javascript Proxy.
 
-For the purpose getting / selecting state by a native Javascript object way.
+For the purpose of getting / selecting, iterating, key-checking state by a native Javascript object way.
 
 Reducing the state is still by immutable.js APIs.
 
@@ -29,7 +29,7 @@ let selectedState = initState.workflows.schemas.workflow_id.id;
 // result: 1
 
 // reduce the state by immutable.js API
-let newStateBySetIn = initState.setIn(['workflows', 'schemas', 's2'], Immutable.fromJS({id: 3, name: 's3'}));
+let newStateBySetIn = initState.setIn(['workflows', 'schemas', 's3'], Immutable.fromJS({id: 3, name: 's3'}));
 // result: a new proxy proxying the new immutable state
 
 // iterate the selected state
@@ -41,6 +41,11 @@ for (let key in selectedState) {
 // workflow_id
 // s2
 // s3
+
+// key-checking the selected state
+if ('s3' in selectedState) {
+    console.log('yes');
+}
 
 console.log('ok');
 

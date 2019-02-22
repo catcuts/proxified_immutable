@@ -37,10 +37,13 @@ const proxified = immutableObject => {
 			obj.__i.set(prop, value);
 			return true; // support Object.assign
 		},
-		ownKeys: function(target, key) {
+		has: (target, key) => {
+			return target.__i.has(key);
+		},
+		ownKeys: (target, key) => {
 			return Object.keys(target.__i.toJS());
 		},
-		getOwnPropertyDescriptor: function(target, key) {
+		getOwnPropertyDescriptor: (target, key) => {
 			 return { enumerable: true, configurable: true };
 		}
 	};

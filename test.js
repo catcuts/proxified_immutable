@@ -1,4 +1,4 @@
-const ProxifiedImmutable = require('.');
+const ProxifiedImmutable = require('proxified_immutable');
 
 const Immutable = require('immutable');
 
@@ -13,8 +13,27 @@ let initState = ProxifiedImmutable(Immutable.fromJS({
     }
 }));
 
-let selectedState = initState.workflows.schemas.workflow_id.id;
+// get / select the state by a native Javascript object way
+let selectedState = initState.workflows.schemas.workflow_id.id;  
+// result: 1
 
-let newStateBySetIn = initState.setIn(['workflows', 'schemas', 's2'], Immutable.fromJS({id: 3, name: 's3'}));
+// reduce the state by immutable.js API
+let newStateBySetIn = initState.setIn(['workflows', 'schemas', 's3'], Immutable.fromJS({id: 3, name: 's3'}));
+// result: a new proxy proxying the new immutable state
+
+// iterate the selected state
+selectedState = initState.workflows.schemas;
+for (let key in selectedState) {
+    console.log(key);
+}
+// result:
+// workflow_id
+// s2
+// s3
+
+// key-checking the selected state
+if ('s3' in selectedState) {
+    console.log('yes');
+}
 
 console.log('ok');
