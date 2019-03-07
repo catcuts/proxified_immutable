@@ -27,8 +27,8 @@ const proxified = immutableObject => {
                 // 返回值（对象）的代理
 				return new Proxy({ __i: result }, handler);
 			} else {
-                // 或返回值（非对象）
-				return result;
+                // 或返回值（非对象）如果不存在则返回 immutable 内部属性
+				return result === undefined ? target.__i[name] : result;
 			}
 
 			return target[name];
