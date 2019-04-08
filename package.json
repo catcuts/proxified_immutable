@@ -1,7 +1,11 @@
 {
   "name": "proxified_immutable",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "proxified immutable",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/catcuts/proxified_immutable.git"
+  },
   "main": "index.js",
   "author": "catcuts",
   "license": "MIT",
