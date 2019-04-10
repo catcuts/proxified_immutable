@@ -10,8 +10,8 @@ const proxified = immutableObject => {
 
             // 如果是函数则直接返回该函数的封装
             // 比如 封装(Map.set/setIn/mergeDeepIn/...)
-            if (util.isFunction(immutable[name])) return (...arguments) => {
-                result = immutable[name](...arguments);  // 它总是返回一个新的 immutable 对象
+            if (util.isFunction(immutable[name])) return (..._arguments) => {
+                result = immutable[name](..._arguments);  // 它总是返回一个新的 immutable 对象
                 // 代理新的 immutable 对象
 				if (Immutable.isImmutable(result)) {
 					// 返回值（对象）的代理
